@@ -1,0 +1,23 @@
+{
+  "name": "trazabilidad-business-layer",
+  "version": "1.0.0",
+  "description": "Capa de Lógica de Negocio - Sistema de Trazabilidad Alimentaria",
+  "main": "src/index.js",
+  "scripts": {
+    "start": "node src/index.js",
+    "dev": "nodemon src/index.js"
+  },
+  "keywords": ["business-logic", "validation", "orchestration"],
+  "author": "",
+  "license": "MIT",
+  "dependencies": {
+    "express": "^4.18.2",
+    "axios": "^1.6.0",
+    "uuid": "^9.0.0",
+    "cors": "^2.8.5"
+  },
+  "devDependencies": {
+    "nodemon": "^3.0.1"
+  }
+}
+

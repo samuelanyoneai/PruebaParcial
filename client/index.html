@@ -1,0 +1,230 @@
+<!DOCTYPE html>
+<html lang="es">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Sistema de Trazabilidad Alimentaria</title>
+    <link rel="stylesheet" href="css/styles.css">
+</head>
+<body>
+    <div class="container">
+        <!-- Header -->
+        <header class="header">
+            <h1>Sistema de Trazabilidad Alimentaria</h1>
+            <p class="subtitle">Cooperativa Agrícola - Arquitectura 3 Capas</p>
+        </header>
+
+        <!-- Navegación de Componentes -->
+        <nav class="nav-tabs">
+            <button class="tab-btn active" data-tab="lotes">Lotes (Origen)</button>
+            <button class="tab-btn" data-tab="procesos">Procesos (Transformación)</button>
+            <button class="tab-btn" data-tab="logistica">Logística (Distribución)</button>
+            <button class="tab-btn" data-tab="trazabilidad">Trazabilidad Completa</button>
+        </nav>
+
+        <!-- Mensajes -->
+        <div id="message" class="message hidden"></div>
+
+        <!-- COMPONENTE 1: Lotes (Trazabilidad hacia atrás) -->
+        <div id="lotes-tab" class="tab-content active">
+            <div class="section">
+                <h2>Registrar Nuevo Lote</h2>
+                <p class="info-text">Trazabilidad hacia atrás: Registro del origen del producto</p>
+                
+                <form id="form-lote" class="form">
+                    <div class="form-row">
+                        <div class="form-group">
+                            <label>Código de Lote *</label>
+                            <input type="text" id="codigoLote" placeholder="MG-2026-001" required>
+                            <small>Formato: XX-YYYY-NNN</small>
+                        </div>
+                        <div class="form-group">
+                            <label>Producto *</label>
+                            <input type="text" id="producto" placeholder="Mangos orgánicos" required>
+                        </div>
+                    </div>
+
+                    <div class="form-row">
+                        <div class="form-group">
+                            <label>Finca *</label>
+                            <input type="text" id="finca" placeholder="La Esperanza" required>
+                        </div>
+                        <div class="form-group">
+                            <label>Ubicación *</label>
+                            <input type="text" id="ubicacion" placeholder="Piura, Perú" required>
+                        </div>
+                    </div>
+
+                    <div class="form-row">
+                        <div class="form-group">
+                            <label>Fecha de Cosecha *</label>
+                            <input type="date" id="fechaCosecha" required>
+                        </div>
+                        <div class="form-group">
+                            <label>Responsable *</label>
+                            <input type="text" id="responsable" placeholder="Juan Pérez" required>
+                        </div>
+                    </div>
+
+                    <div class="form-row">
+                        <div class="form-group">
+                            <label>Cantidad (kg) *</label>
+                            <input type="number" id="cantidadKg" placeholder="500" min="0" step="0.1" required>
+                        </div>
+                    </div>
+
+                    <button type="submit" class="btn btn-primary">Registrar Lote</button>
+                </form>
+            </div>
+
+            <div class="section">
+                <h2>Lotes Registrados</h2>
+                <div id="lista-lotes" class="list-container">
+                    <p class="loading">Cargando lotes...</p>
+                </div>
+            </div>
+        </div>
+
+        <!-- COMPONENTE 2: Procesos (Trazabilidad interna) -->
+        <div id="procesos-tab" class="tab-content">
+            <div class="section">
+                <h2>Registrar Proceso de Transformación</h2>
+                <p class="info-text">Trazabilidad interna: Procesos aplicados al producto</p>
+                
+                <form id="form-proceso" class="form">
+                    <div class="form-row">
+                        <div class="form-group">
+                            <label>Seleccionar Lote *</label>
+                            <select id="loteIdProceso" required>
+                                <option value="">-- Seleccione un lote --</option>
+                            </select>
+                        </div>
+                        <div class="form-group">
+                            <label>Tipo de Proceso *</label>
+                            <select id="tipoProceso" required>
+                                <option value="">-- Seleccione --</option>
+                                <option value="lavado">Lavado</option>
+                                <option value="clasificacion">Clasificación</option>
+                                <option value="empaquetado">Empaquetado</option>
+                                <option value="control_calidad">Control de Calidad</option>
+                                <option value="secado">Secado</option>
+                            </select>
+                        </div>
+                    </div>
+
+                    <div class="form-row">
+                        <div class="form-group">
+                            <label>Fecha del Proceso *</label>
+                            <input type="date" id="fechaProceso" required>
+                        </div>
+                        <div class="form-group">
+                            <label>Responsable *</label>
+                            <input type="text" id="responsableProceso" placeholder="María García" required>
+                        </div>
+                    </div>
+
+                    <div class="form-group">
+                        <label>Observaciones</label>
+                        <textarea id="observaciones" rows="3" placeholder="Detalles adicionales del proceso..."></textarea>
+                    </div>
+
+                    <button type="submit" class="btn btn-primary">Registrar Proceso</button>
+                </form>
+            </div>
+
+            <div class="section">
+                <h2>Procesos Registrados</h2>
+                <div id="lista-procesos" class="list-container">
+                    <p class="loading">Cargando procesos...</p>
+                </div>
+            </div>
+        </div>
+
+        <!-- COMPONENTE 3: Logística (Trazabilidad hacia adelante) -->
+        <div id="logistica-tab" class="tab-content">
+            <div class="section">
+                <h2>Registrar Envío / Distribución</h2>
+                <p class="info-text">Trazabilidad hacia adelante: Distribución del producto</p>
+                
+                <form id="form-logistica" class="form">
+                    <div class="form-row">
+                        <div class="form-group">
+                            <label>Seleccionar Lote *</label>
+                            <select id="loteIdLogistica" required>
+                                <option value="">-- Seleccione un lote --</option>
+                            </select>
+                        </div>
+                        <div class="form-group">
+                            <label>Fecha de Salida *</label>
+                            <input type="date" id="fechaSalida" required>
+                        </div>
+                    </div>
+
+                    <div class="form-row">
+                        <div class="form-group">
+                            <label>Destino *</label>
+                            <input type="text" id="destino" placeholder="Supermercado Plaza Norte" required>
+                        </div>
+                        <div class="form-group">
+                            <label>Transportista *</label>
+                            <input type="text" id="transportista" placeholder="Logística Express SAC" required>
+                        </div>
+                    </div>
+
+                    <div class="form-row">
+                        <div class="form-group">
+                            <label>Temperatura de Transporte (°C)</label>
+                            <input type="number" id="temperaturaTransporte" placeholder="4" step="0.1">
+                            <small>Opcional: para productos refrigerados</small>
+                        </div>
+                        <div class="form-group">
+                            <label>Fecha de Entrega</label>
+                            <input type="date" id="fechaEntrega">
+                            <small>Opcional: si ya fue entregado</small>
+                        </div>
+                    </div>
+
+                    <button type="submit" class="btn btn-primary">Registrar Logística</button>
+                </form>
+            </div>
+
+            <div class="section">
+                <h2>Registros de Logística</h2>
+                <div id="lista-logistica" class="list-container">
+                    <p class="loading">Cargando registros...</p>
+                </div>
+            </div>
+        </div>
+
+        <!-- COMPONENTE 4: Trazabilidad Completa -->
+        <div id="trazabilidad-tab" class="tab-content">
+            <div class="section">
+                <h2>Consultar Trazabilidad Completa</h2>
+                <p class="info-text">Visualización completa: Origen → Transformación → Distribución</p>
+                
+                <div class="form">
+                    <div class="form-row">
+                        <div class="form-group">
+                            <label>Seleccionar Lote</label>
+                            <select id="loteIdTrazabilidad">
+                                <option value="">-- Seleccione un lote --</option>
+                            </select>
+                        </div>
+                        <button type="button" id="btn-consultar-trazabilidad" class="btn btn-secondary">
+                            Consultar Trazabilidad
+                        </button>
+                    </div>
+                </div>
+            </div>
+
+            <div id="resultado-trazabilidad" class="section hidden">
+                <!-- Resultado se cargará dinámicamente -->
+            </div>
+        </div>
+
+    </div>
+
+    <script src="js/app.js"></script>
+</body>
+</html>
+

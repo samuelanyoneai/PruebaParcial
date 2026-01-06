@@ -1,0 +1,27 @@
+{
+  "name": "sistema-trazabilidad-alimentaria",
+  "version": "1.0.0",
+  "description": "Sistema de trazabilidad alimentaria con arquitectura 3 capas estricta para cooperativas agrícolas",
+  "main": "index.js",
+  "scripts": {
+    "install-all": "cd data && npm install && cd ../server && npm install",
+    "start-data": "cd data && npm start",
+    "start-server": "cd server && npm start",
+    "start-client": "cd client && npx http-server -p 8080"
+  },
+  "keywords": [
+    "trazabilidad",
+    "alimentaria",
+    "3-capas",
+    "arquitectura",
+    "cooperativa",
+    "agricola"
+  ],
+  "author": "",
+  "license": "MIT",
+  "repository": {
+    "type": "git",
+    "url": "https://github.com/tu-usuario/trazabilidad-alimentaria"
+  }
+}
+
